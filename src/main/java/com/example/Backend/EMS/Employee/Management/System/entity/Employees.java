@@ -3,10 +3,14 @@ package com.example.Backend.EMS.Employee.Management.System.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class Employees extends AbstractBaseEntity {
 
     @Id
