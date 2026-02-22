@@ -1,0 +1,59 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+
+  liquibase:
+    enabled: false
+
+  application:
+    name: Employee-Management-System
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    username: hr
+    password: hr
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+        jdbc:
+          fetch_size: 50
+
+management:
+  metrics:
+    enable:
+      jdbc: false
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+
+  otlp:
+    metrics:
+      export:
+        enabled: false
+    tracing:
+      export:
+        enabled: false
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
+
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
