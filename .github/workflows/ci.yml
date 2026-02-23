@@ -28,25 +28,25 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-frontend:
-  name: Build Frontend (React + Vite)
-  runs-on: ubuntu-latest
+  frontend:
+    name: Build Frontend (React + Vite)
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: ui/package-lock.json
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
 
-    - name: Install Dependencies
-      working-directory: ui
-      run: npm ci
+      - name: Install Dependencies
+        working-directory: ui
+        run: npm ci
 
-    - name: Build React App
-      working-directory: ui
-      run: npm run build
+      - name: Build React App
+        working-directory: ui
+        run: npm run build

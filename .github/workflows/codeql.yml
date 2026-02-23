@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: CodeQL Security Scan
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
   pull_request:
     branches: [ "master" ]
   schedule:
-    - cron: '0 3 * * 1'   # Runs every Monday at 3 AM
+    - cron: '0 2 * * 1'
 
 jobs:
   analyze:
-    name: Analyze
+    name: CodeQL Analysis
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
 
     strategy:
       fail-fast: false
@@ -22,24 +26,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Initialize CodeQL
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
 
-      # If language is Java, build src
-      - name: Build Java (Gradle)
+      - name: Setup Java
         if: matrix.language == 'java'
-        run: |
-          chmod +x gradlew
-          ./gradlew build -x test
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      # Autobuild for JavaScript
       - name: Autobuild
-        if: matrix.language == 'javascript'
         uses: github/codeql-action/autobuild@v3
 
-      # Perform analysis
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
