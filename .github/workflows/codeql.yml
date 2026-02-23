@@ -1,0 +1,46 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '0 3 * * 1'   # Runs every Monday at 3 AM
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java', 'javascript' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Initialize CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      # If language is Java, build backend
+      - name: Build Java (Gradle)
+        if: matrix.language == 'java'
+        run: |
+          cd backend
+          chmod +x gradlew
+          ./gradlew build -x test
+
+      # Autobuild for JavaScript
+      - name: Autobuild
+        if: matrix.language == 'javascript'
+        uses: github/codeql-action/autobuild@v3
+
+      # Perform analysis
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
