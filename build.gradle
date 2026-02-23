@@ -115,16 +115,34 @@ tasks.named('asciidoctor') {
 	dependsOn test
 }
 
+// =============================
+// Frontend Build Pipeline Fix
+// =============================
+
+// Register frontend build task
+tasks.register('npmBuildTask', Exec) {
+	workingDir "$projectDir/ui"
+	commandLine "npm", "run", "build"
+}
+
+// Register copy task
 tasks.register('copyFrontendBuild', Copy) {
+
+	dependsOn tasks.named("npmBuildTask")
+
 	from("$projectDir/ui/dist") {
 		include "**/*"
+		exclude "*.map"
 	}
-	into "$projectDir/src/main/resources/static"
+
+	into("$projectDir/src/main/resources/static")
+
 	onlyIf {
 		file("$projectDir/ui/dist").exists()
 	}
 }
 
-bootJar {
+// bootJar pipeline dependency
+tasks.named('bootJar') {
 	dependsOn tasks.named("copyFrontendBuild")
 }
