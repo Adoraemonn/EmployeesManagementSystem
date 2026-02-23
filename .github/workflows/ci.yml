@@ -30,6 +30,15 @@ jobs:
           java-version: 17
           cache: gradle
 
+      - name: Verify Gradle Wrapper
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "gradle-wrapper.jar is missing. Please ensure it is committed to the repository." && exit 1;
+          fi
+
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+
       - name: Make Gradle Executable
         run: chmod +x gradlew
         working-directory: .
@@ -87,7 +96,12 @@ jobs:
 
       - name: Install Frontend Dependencies
         working-directory: ui
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            echo "package-lock.json is missing. Falling back to npm install." && npm install
+          fi
 
       ##################################################
       # Supply Chain Protection
