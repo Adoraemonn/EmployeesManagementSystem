@@ -114,3 +114,17 @@ tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
 }
+
+tasks.register('copyFrontendBuild', Copy) {
+	from("$projectDir/ui/dist") {
+		include "**/*"
+	}
+	into "$projectDir/src/main/resources/static"
+	onlyIf {
+		file("$projectDir/ui/dist").exists()
+	}
+}
+
+bootJar {
+	dependsOn tasks.named("copyFrontendBuild")
+}
