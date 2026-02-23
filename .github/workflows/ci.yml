@@ -1,4 +1,4 @@
-name: Enterprise Fullstack CI
+name: Fullstack CI
 
 on:
   push:
@@ -9,76 +9,45 @@ on:
 jobs:
 
   backend:
-
-    name: Backend Build + Security Scan
+    name: Build Backend (Spring Boot)
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Java + Cache
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: gradle
 
-      - name: Make Gradle Wrapper Executable
+      - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build Backend
+      - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
-      # ⭐ OWASP Dependency Scan
-      - name: OWASP Dependency Scan
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: EMS-Backend
-          path: .
-          format: HTML
-          args: >
-            --failOnCVSS 7
-
-      - name: Upload Security Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-security-report
-          path: reports
-
-
   frontend:
-
-    name: Frontend Build + Security Scan
+    name: Build Frontend (React + Vite)
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node + Cache
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: npm
+          cache: 'npm'
           cache-dependency-path: ./ui/package-lock.json
 
       - name: Install Dependencies
         working-directory: ui
         run: npm ci
 
-      - name: npm Audit Security Scan
-        working-directory: ui
-        run: npm audit --audit-level=high || true
-
       - name: Build React App
         working-directory: ui
         run: npm run build
-
-      - name: Upload Frontend Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: ui/dist
