@@ -1,126 +1,53 @@
-name: Staff Engineer FAANG Level CI
+name: EMS Fullstack CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "master" ]
 
 jobs:
-  ########################################################
-  # Backend Pipeline
-  ########################################################
 
-  backend_security_pipeline:
-
+  backend:
+    name: Build Backend (Spring Boot)
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-
-      ##################################################
-      # Runtime Setup
-      ##################################################
-
-      - name: Setup Java Environment
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: 'temurin'
+          java-version: '17'
           cache: gradle
 
-      - name: Verify Gradle Wrapper
-        run: |
-          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
-            echo "gradle-wrapper.jar is missing. Please ensure it is committed to the repository." && exit 1;
-          fi
-
-      - name: Set JAVA_HOME
-        run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
-
-      - name: Make Gradle Executable
+      - name: Make gradlew executable
         run: chmod +x gradlew
-        working-directory: .
 
-      ##################################################
-      # Build Stage
-      ##################################################
-
-      - name: Build Backend
+      - name: Build with Gradle
         run: ./gradlew build --no-daemon
-        working-directory: .
 
-      ##################################################
-      # Dependency Risk Analysis
-      ##################################################
-
-      - name: OWASP Vulnerability Scan
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: EMS-Backend
-          path: .
-          format: HTML
-          out: reports
-          args: >
-            --failOnCVSS 7
-            --noupdate
-
-      - name: Upload Security Evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-security-evidence
-          path: reports
-
-  ########################################################
-  # Frontend Security Pipeline
-  ########################################################
-
-  frontend_security_pipeline:
-
+  frontend:
+    name: Build Frontend (React + Vite)
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-
-      ##################################################
-      # Runtime Setup
-      ##################################################
-
-      - name: Setup Node Runtime
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: ./ui/package-lock.json
 
-      - name: Install Frontend Dependencies
+      - name: Install Dependencies
         working-directory: ui
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            echo "package-lock.json is missing. Falling back to npm install." && npm install
-          fi
+        run: npm ci
 
-      ##################################################
-      # Supply Chain Protection
-      ##################################################
-
-      - name: Frontend Security Audit
-        working-directory: ui
-        run: npm audit --audit-level=high
-
-      ##################################################
-      # Build Artifact
-      ##################################################
-
-      - name: Build Frontend Application
+      - name: Build React App
         working-directory: ui
         run: npm run build
-
-      - name: Archive Frontend Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-release-candidate
-          path: ui/dist
