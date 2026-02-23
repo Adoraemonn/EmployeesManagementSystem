@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Java Environment
+      - name: Setup Java + Cache
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -33,12 +33,11 @@ jobs:
 
       # ⭐ OWASP Dependency Scan
       - name: OWASP Dependency Scan
-        uses: dependency-check/Dependency-Check_Action@master
+        uses: dependency-check/Dependency-Check_Action@main
         with:
           project: EMS-Backend
           path: .
-          format: "HTML"
-          out: reports
+          format: HTML
           args: >
             --failOnCVSS 7
 
