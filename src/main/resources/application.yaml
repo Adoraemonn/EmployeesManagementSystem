@@ -7,7 +7,7 @@ spring:
     enabled: false
 
   application:
-    name: Employee-Management-System
+    name: Employees-Management-System
 
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XEPDB1
@@ -39,7 +39,7 @@ management:
   tracing:
     sampling:
       probability: 1.0
-    enabled: true
+    enabled: false
 
   otlp:
     metrics:
@@ -51,7 +51,7 @@ management:
 
 logging:
   pattern:
-    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
+#    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
 
   level:
     root: INFO

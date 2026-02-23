@@ -21,6 +21,8 @@ public class EmployeeDTO {
     private Integer commissionPCT;
     private Integer managerId;
     private Integer departmentId;
+    private Boolean employeeExist;
+    private Instant employmentEndDate;
     private String runIdentifier;
     private Instant createdDatetime;
     private String createdById;
@@ -40,6 +42,8 @@ public class EmployeeDTO {
                        Integer commissionPCT,
                        Integer managerId,
                        Integer departmentId,
+                       Boolean employeeExist,
+                       Instant employmentEndDate,
                        String runIdentifier,
                        Instant createdDatetime,
                        String createdById,
@@ -58,6 +62,8 @@ public class EmployeeDTO {
         this.commissionPCT = commissionPCT;
         this.managerId = managerId;
         this.departmentId = departmentId;
+        this.employeeExist = employeeExist;
+        this.employmentEndDate = employmentEndDate;
         this.runIdentifier = runIdentifier;
         this.createdDatetime = createdDatetime;
         this.createdById = createdById;

@@ -1,16 +1,16 @@
 package com.example.Backend.EMS.Employee.Management.System.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "EMPLOYEES")
 public class Employees extends AbstractBaseEntity {
 
     @Id
@@ -46,5 +46,11 @@ public class Employees extends AbstractBaseEntity {
 
     @Column(name = "DEPARTMENT_ID")
     private Integer departmentId;
+
+    @Column(name = "EMPLOYEE_EXIST")
+    private Boolean employeeExist;
+
+    @Column(name = "EMP_END_DATE")
+    private Instant employmentEndDate;
 
 }
