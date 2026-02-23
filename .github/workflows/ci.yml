@@ -1,53 +1,112 @@
-name: Fullstack CI
+name: Staff Engineer FAANG Level CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
 
 jobs:
+  ########################################################
+  # Backend Pipeline
+  ########################################################
 
-  backend:
-    name: Build Backend (Spring Boot)
+  backend_security_pipeline:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
 
-      - name: Setup Java
+      - uses: actions/checkout@v4
+
+      ##################################################
+      # Runtime Setup
+      ##################################################
+
+      - name: Setup Java Environment
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
           cache: gradle
 
-      - name: Make gradlew executable
+      - name: Make Gradle Executable
         run: chmod +x gradlew
+        working-directory: .
 
-      - name: Build with Gradle
+      ##################################################
+      # Build Stage
+      ##################################################
+
+      - name: Build Backend
         run: ./gradlew build --no-daemon
+        working-directory: .
 
-  frontend:
-    name: Build Frontend (React + Vite)
+      ##################################################
+      # Dependency Risk Analysis
+      ##################################################
+
+      - name: OWASP Vulnerability Scan
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: EMS-Backend
+          path: .
+          format: HTML
+          out: reports
+          args: >
+            --failOnCVSS 7
+            --noupdate
+
+      - name: Upload Security Evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-security-evidence
+          path: reports
+
+  ########################################################
+  # Frontend Security Pipeline
+  ########################################################
+
+  frontend_security_pipeline:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
 
-      - name: Setup Node
+      - uses: actions/checkout@v4
+
+      ##################################################
+      # Runtime Setup
+      ##################################################
+
+      - name: Setup Node Runtime
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: ./ui/package-lock.json
+          node-version: 18
+          cache: npm
 
-      - name: Install Dependencies
+      - name: Install Frontend Dependencies
         working-directory: ui
         run: npm ci
 
-      - name: Build React App
+      ##################################################
+      # Supply Chain Protection
+      ##################################################
+
+      - name: Frontend Security Audit
+        working-directory: ui
+        run: npm audit --audit-level=high
+
+      ##################################################
+      # Build Artifact
+      ##################################################
+
+      - name: Build Frontend Application
         working-directory: ui
         run: npm run build
+
+      - name: Archive Frontend Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-release-candidate
+          path: ui/dist
