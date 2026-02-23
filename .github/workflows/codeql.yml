@@ -28,11 +28,10 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      # If language is Java, build backend
+      # If language is Java, build src
       - name: Build Java (Gradle)
         if: matrix.language == 'java'
         run: |
-          cd backend
           chmod +x gradlew
           ./gradlew build -x test
 
