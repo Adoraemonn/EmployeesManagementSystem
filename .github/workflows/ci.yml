@@ -33,7 +33,7 @@ jobs:
 
       # ⭐ OWASP Dependency Scan
       - name: OWASP Dependency Scan
-        uses: dependency-check/Dependency-Check_Action@main
+        uses: dependency-check/Dependency-Check_Action@master
         with:
           project: EMS-Backend
           path: .
