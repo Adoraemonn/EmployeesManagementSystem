@@ -1,4 +1,4 @@
-package com.example.Backend.EMS.Employee.Management.System;
+package com.example.backend.ems.employee.management.system;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
