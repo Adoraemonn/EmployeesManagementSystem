@@ -1,4 +1,4 @@
-package com.example.Backend.EMS.Employee.Management.System.entity;
+package com.example.backend.ems.employee.management.system.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

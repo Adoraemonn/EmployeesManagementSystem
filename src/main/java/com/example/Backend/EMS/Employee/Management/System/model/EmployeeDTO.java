@@ -1,4 +1,4 @@
-package com.example.Backend.EMS.Employee.Management.System.model;
+package com.example.backend.ems.employee.management.system.model;
 
 import lombok.Getter;
 import lombok.Setter;

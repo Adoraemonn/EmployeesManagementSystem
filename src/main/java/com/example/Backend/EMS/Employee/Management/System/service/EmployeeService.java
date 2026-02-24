@@ -1,4 +1,4 @@
-package com.example.Backend.EMS.Employee.Management.System.service;
+package com.example.backend.ems.employee.management.system.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.Backend.EMS.Employee.Management.System.config;
+package com.example.backend.ems.employee.management.system.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
