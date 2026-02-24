@@ -1,3 +1,7 @@
 Backend: http://localhost:8080/api/
 Frontend: http://localhost:3000/
 Swagger: http://localhost:8080/swagger-ui/index.html
+
+
+
+Post deployment : http://localhost:8080/
