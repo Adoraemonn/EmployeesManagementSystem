@@ -1,8 +1,8 @@
 package com.example.backend.ems.employee.management.system.controller;
 
 
-import com.example.backend.ems.employee.management.system.model.EmployeeDTO;
 import com.example.backend.ems.employee.management.system.repository.EmployeeRepository;
+import com.example.backend.ems.employee.management.system.repository.projectioninterface.EmployeeDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,20 +25,20 @@ public class EmployeesController {
     }
 
     @GetMapping("/employeeId")
-    public EmployeeDTO getEmployeeDetailsById(@RequestParam Integer employeeId) {
-        log.info("getEmployeeDetailsById", employeeId);
+    public EmployeeDetails getEmployeeDetailsById(@RequestParam Integer employeeId) {
+        log.info("getEmployeeDetailsById-->");
         return employeeRepository.getEmployeeDetailsById(employeeId);
     }
 
     @GetMapping("/all")
-    Page<EmployeeDTO> getEmployeeDetailsByPage(Pageable pageable) {
-        log.info("getAllEmployeeDetailsWithPagination", pageable);
+    Page<EmployeeDetails> getEmployeeDetailsByPage(Pageable pageable) {
+        log.info("getAllEmployeeDetailsWithPagination : ");
         return employeeRepository.getAllEmployeeDetailsByPagination(pageable);
     }
 
     @GetMapping("/allemployee")
-    List<EmployeeDTO> getEmployeeDetails() {
-        log.info("getALLEmployeeDetailsWithoutPagination");
+    List<EmployeeDetails> getEmployeeDetails() {
+        log.info("getALLEmployeeDetailsWithoutPagination : ");
         return employeeRepository.getAllEmployeeDetails();
     }
 

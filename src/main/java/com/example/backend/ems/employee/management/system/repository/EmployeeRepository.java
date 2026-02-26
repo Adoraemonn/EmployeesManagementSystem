@@ -1,7 +1,7 @@
 package com.example.backend.ems.employee.management.system.repository;
 
 import com.example.backend.ems.employee.management.system.entity.Employees;
-import com.example.backend.ems.employee.management.system.model.EmployeeDTO;
+import com.example.backend.ems.employee.management.system.repository.projectioninterface.EmployeeDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,13 +18,13 @@ import static com.example.backend.ems.employee.management.system.repository.quer
 public interface EmployeeRepository extends JpaRepository<Employees, Integer> {
 
     @Query(GET_EMPLOYEE_BY_ID)
-    EmployeeDTO getEmployeeDetailsById(@Param("employeeId") Integer employeeId);
+    EmployeeDetails getEmployeeDetailsById(@Param("employeeId") Integer employeeId);
 
     @Query(GET_ALL_EMPLOYEE)
-    Page<EmployeeDTO> getAllEmployeeDetailsByPagination(Pageable pageable);
+    Page<EmployeeDetails> getAllEmployeeDetailsByPagination(Pageable pageable);
 
     @Query(GET_ALL_EMPLOYEE)
-    List<EmployeeDTO> getAllEmployeeDetails();
+    List<EmployeeDetails> getAllEmployeeDetails();
 
 
 }
