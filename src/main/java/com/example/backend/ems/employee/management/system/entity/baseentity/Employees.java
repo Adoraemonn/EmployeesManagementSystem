@@ -1,4 +1,4 @@
-package com.example.backend.ems.employee.management.system.entity;
+package com.example.backend.ems.employee.management.system.entity.baseentity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "EMPLOYEES")
+@Table(name = "EMPLOYEES", schema = "HR")
 public class Employees extends AbstractBaseEntity {
 
     @Id

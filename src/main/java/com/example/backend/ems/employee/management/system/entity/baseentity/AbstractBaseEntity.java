@@ -1,4 +1,4 @@
-package com.example.backend.ems.employee.management.system.entity;
+package com.example.backend.ems.employee.management.system.entity.baseentity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
