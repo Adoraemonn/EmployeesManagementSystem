@@ -2,11 +2,15 @@ package com.example.backend.ems.employee.management.system.entity.auditentity;
 
 import com.example.backend.ems.employee.management.system.entity.baseentity.AbstractBaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "EMPLOYEES_HIST", schema = "HR")
 public class EmployeesAuditHistory extends AbstractBaseEntity {
@@ -14,10 +18,10 @@ public class EmployeesAuditHistory extends AbstractBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "HIST_ID")
-    private Long histId;
+    private Integer histId;
 
     @Column(name = "EMPLOYEE_ID")
-    private Long employeeId;
+    private Integer employeeId;
 
     @Column(name = "FIRST_NAME", length = 25)
     private String firstName;

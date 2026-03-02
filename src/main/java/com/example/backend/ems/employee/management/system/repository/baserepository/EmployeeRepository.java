@@ -1,4 +1,4 @@
-package com.example.backend.ems.employee.management.system.repository;
+package com.example.backend.ems.employee.management.system.repository.baserepository;
 
 import com.example.backend.ems.employee.management.system.entity.baseentity.Employees;
 import com.example.backend.ems.employee.management.system.repository.projectioninterface.EmployeeDetails;

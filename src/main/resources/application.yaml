@@ -51,7 +51,9 @@ management:
 
 logging:
   pattern:
-#    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
+    level: "[%traceId-%spanId]"
+    console: "%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n"
+
 
   level:
     root: INFO

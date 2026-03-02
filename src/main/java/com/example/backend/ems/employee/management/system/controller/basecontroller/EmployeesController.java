@@ -1,7 +1,7 @@
-package com.example.backend.ems.employee.management.system.controller;
+package com.example.backend.ems.employee.management.system.controller.basecontroller;
 
 
-import com.example.backend.ems.employee.management.system.repository.EmployeeRepository;
+import com.example.backend.ems.employee.management.system.repository.baserepository.EmployeeRepository;
 import com.example.backend.ems.employee.management.system.repository.projectioninterface.EmployeeDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
