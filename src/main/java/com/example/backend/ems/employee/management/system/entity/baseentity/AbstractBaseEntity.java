@@ -16,6 +16,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.time.Instant;
 
+/**
+ * Abstract base class for entities to provide auditing fields.
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter

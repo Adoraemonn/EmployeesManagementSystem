@@ -5,9 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Global exception handler for the application.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handles RuntimeExceptions and returns a standardized API error response.
+     * @param ex the RuntimeException that was thrown
+     * @return a ResponseEntity containing the ApiError and HTTP status
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiError> handleRuntimeException(RuntimeException ex) {
 
@@ -20,6 +28,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Handles generic Exceptions and returns a standardized API error response.
+     * @param ex the Exception that was thrown
+     * @return a ResponseEntity containing the ApiError and HTTP status
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(Exception ex) {
 

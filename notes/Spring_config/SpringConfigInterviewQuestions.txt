@@ -1,9 +1,9 @@
-Difference between @CrossOrigin vs global CORS config ?
+1) Difference between @CrossOrigin vs global CORS config ?
 
 --> @CrossOrigin is a method-level annotation that allows you to specify CORS settings for individual controller methods or classes.
     It provides fine-grained control over CORS configuration on a per-endpoint basis.
 
-How CORS works internally, especially the Preflight request ?
+2) How CORS works internally, especially the Preflight request ?
 
  --> CORS is only triggered when:
 
@@ -28,9 +28,23 @@ Diagram :  Frontend → OPTIONS (Preflight) → Server
      If protocol, domain, and port are the same, the request is considered same-origin and browser allows it without preflight."
 
 
-How to configure CORS in Spring Security
+3) How to configure CORS in Spring Security
 
-Difference between permitAll() vs ignoring()
+4) Difference between permitAll() vs ignoring()
+
+--> "permitAll() allows public access but still passes the request through the Spring Security filter chain.
+     ignoring() completely bypasses Spring Security, meaning no filters are applied. Therefore,
+      permitAll() is recommended for public APIs, while ignoring() is mainly used for static resources."
+
+   | Feature                           | permitAll() | ignoring() |
+   | --------------------------------- | ----------- | ---------- |
+   | Passes through Security Filter?   | ✅ Yes       | ❌ No       |
+   | Authentication required?          | ❌ No        | ❌ No       |
+   | CORS applied?                     | ✅ Yes       | ❌ No       |
+   | CSRF applied?                     | ✅ Yes       | ❌ No       |
+   | Recommended for APIs?             | ✅ Yes       | ❌ No       |
+   | Recommended for static resources? | ⚠ Sometimes | ✅ Yes      |
+
 
 How CORS works internally in browser
 

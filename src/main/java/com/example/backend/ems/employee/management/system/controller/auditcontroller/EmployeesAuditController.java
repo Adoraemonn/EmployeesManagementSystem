@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller for handling employee audit-related requests.
+ */
 @RestController
 @RequestMapping("/api/employee/audit")
 public class EmployeesAuditController {
@@ -21,10 +24,20 @@ public class EmployeesAuditController {
 
     private final EmployeeAuditRepository employeeAuditRepository;
 
+    /**
+     * Constructs an EmployeesAuditController with the given EmployeeAuditRepository.
+     * @param employeeAuditRepository the repository for employee audit data
+     */
     public EmployeesAuditController(EmployeeAuditRepository employeeAuditRepository) {
         this.employeeAuditRepository = employeeAuditRepository;
     }
 
+    /**
+     * Retrieves the audit history for a specific employee.
+     * @param employeeId the ID of the employee
+     * @return a list of employee audit history details
+     * @throws ResourceNotFoundException if no audit history is found for the given employee ID
+     */
     @Operation(summary = "Get employee audit details by ID",
                description = "Returns audit history for the given employee ID")
     @GetMapping("/employeeId")

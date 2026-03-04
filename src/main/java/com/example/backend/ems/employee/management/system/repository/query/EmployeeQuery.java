@@ -1,5 +1,8 @@
 package com.example.backend.ems.employee.management.system.repository.query;
 
+/**
+ * Defines constant query strings for employee-related database operations.
+ */
 public interface EmployeeQuery {
 
     String BASE_QUERY = """

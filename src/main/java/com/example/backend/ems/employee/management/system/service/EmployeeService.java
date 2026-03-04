@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
-
-
+/**
+ * Service class for employee-related business logic.
+ */
 @Service
 public class EmployeeService {
 

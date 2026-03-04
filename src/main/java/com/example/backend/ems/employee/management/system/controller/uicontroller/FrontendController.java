@@ -4,9 +4,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * Controller to serve the frontend application.
+ */
 @Controller
 public class FrontendController {
 
+    /**
+     * Forwards requests to the frontend application.
+     * @param path the path being requested
+     * @return a forward to the index.html page
+     */
     @GetMapping(value = {"/", "/{path:^(?!api$).*$}", "/**/{path:^(?!api$).*$}"})
     public String forward(@PathVariable String path) {
         return "forward:/index.html";
