@@ -1,0 +1,67 @@
+1) @Configuration
+
+Marks this class as a Spring configuration class.
+Spring will automatically detect and apply it at startup.
+
+2) implements WebMvcConfigurer
+
+This allows you to customize Spring MVC configuration, like CORS, interceptors, formatters, etc.
+
+3) addCorsMappings(CorsRegistry registry)
+
+   This method configures CORS (Cross-Origin Resource Sharing) rules.
+
+   CORS is needed when:
+
+   Backend → http://localhost:8080
+
+   Frontend (React/Angular) → http://localhost:3000
+
+   Different ports = Different origin ❌ (Browser blocks request)
+
+   CORS config allows it ✅.
+
+ 4) registry.addMapping("/api/**")
+
+    👉 Applies CORS rules only to URLs starting with /api/
+    Example:
+    /api/employees
+    /api/departments
+
+ 5) .allowedOrigins("http://localhost:3000")
+
+   👉 Only allows requests coming from your frontend running on port 3000 (React default).
+
+ 6) .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    👉 Allows these HTTP methods.
+       OPTIONS is important for preflight requests.
+
+       "OPTIONS method is used for CORS preflight requests.
+        The browser sends it before actual request to check whether the server allows cross-origin access."
+
+ 7) .allowedHeaders("*")
+
+    👉 Allows all headers (Authorization, Content-Type, etc.)
+
+ 8) .allowCredentials(true)
+
+    👉 Allows sending cookies / authentication tokens.
+
+    ⚠ Important:
+    If allowCredentials(true) is used, you cannot use allowedOrigins("*").
+
+ 9) .maxAge(3600)
+
+    👉 Caches the preflight response for 1 hour (3600 seconds).
+    This means the browser won't send a preflight request for the same endpoint for 1 hour, improving performance.
+
+Summary:
+
+--This class says:
+
+“Hey browser, if request comes from localhost:3000 and hits /api/**, allow it.”
+
+💡 Interview One-Liner
+
+"CORS configuration is used to allow cross-origin requests from frontend applications running on different domains or ports."
+

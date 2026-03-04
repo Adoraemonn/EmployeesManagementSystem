@@ -10,6 +10,9 @@ import lombok.Setter;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * Represents an employee in the system.
+ */
 @Entity
 @Getter
 @Setter

@@ -6,6 +6,9 @@ import lombok.Setter;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * Data Transfer Object for Employee data.
+ */
 @Getter
 @Setter
 public class EmployeeDTO {
@@ -31,6 +34,29 @@ public class EmployeeDTO {
     private Boolean errorFlagIndicator;
     private String errorText;
 
+    /**
+     * Constructs a new EmployeeDTO with the specified details.
+     * @param employeeId the employee's ID
+     * @param firstName the employee's first name
+     * @param lastName the employee's last name
+     * @param emailId the employee's email address
+     * @param phoneNumber the employee's phone number
+     * @param hireDate the employee's hire date
+     * @param jobId the employee's job ID
+     * @param salary the employee's salary
+     * @param commissionPCT the employee's commission percentage
+     * @param managerId the employee's manager's ID
+     * @param departmentId the employee's department's ID
+     * @param employeeExist indicates if the employee exists
+     * @param employmentEndDate the employee's employment end date
+     * @param runIdentifier the run identifier
+     * @param createdDatetime the created datetime
+     * @param createdById the created by ID
+     * @param updatedDatetime the updated datetime
+     * @param updatedById the updated by ID
+     * @param errorFlagIndicator the error flag indicator
+     * @param errorText the error text
+     */
     public EmployeeDTO(Integer employeeId,
                        String firstName,
                        String lastName,

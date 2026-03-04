@@ -1,0 +1,95 @@
+1) Difference between @CrossOrigin vs global CORS config ?
+
+--> @CrossOrigin is a method-level annotation that allows you to specify CORS settings for individual controller methods or classes.
+    It provides fine-grained control over CORS configuration on a per-endpoint basis.
+
+2) How CORS works internally, especially the Preflight request ?
+
+ --> CORS is only triggered when:
+
+    Protocol + Domain + Port
+
+ --> "For non-simple requests, the browser sends a preflight OPTIONS request to verify whether the server allows the origin,
+ method, and headers. If the server responds with appropriate Access-Control-Allow-* headers, the browser proceeds with
+ the actual request. Otherwise, the browser blocks it."
+
+Diagram :  Frontend → OPTIONS (Preflight) → Server
+           ← Allowed? (CORS Headers)
+           Frontend → Actual Request → Server
+           ← Actual Response
+
+--> If interviewer asks:
+
+    "If frontend and backend run on same port, what happens to CORS?"
+
+    You answer:
+
+--> "CORS will not be triggered because CORS is enforced only for cross-origin requests.
+     If protocol, domain, and port are the same, the request is considered same-origin and browser allows it without preflight."
+
+
+3) How to configure CORS in Spring Security
+
+4) Difference between permitAll() vs ignoring()
+
+--> "permitAll() allows public access but still passes the request through the Spring Security filter chain.
+     ignoring() completely bypasses Spring Security, meaning no filters are applied. Therefore,
+      permitAll() is recommended for public APIs, while ignoring() is mainly used for static resources."
+
+   | Feature                           | permitAll() | ignoring() |
+   | --------------------------------- | ----------- | ---------- |
+   | Passes through Security Filter?   | ✅ Yes       | ❌ No       |
+   | Authentication required?          | ❌ No        | ❌ No       |
+   | CORS applied?                     | ✅ Yes       | ❌ No       |
+   | CSRF applied?                     | ✅ Yes       | ❌ No       |
+   | Recommended for APIs?             | ✅ Yes       | ❌ No       |
+   | Recommended for static resources? | ⚠ Sometimes | ✅ Yes      |
+
+
+How CORS works internally in browser
+
+Why allowedOrigins("*") fails with credentials
+
+How JWT + CORS works together
+
+How does Spring Security work internally?
+
+What is OncePerRequestFilter?
+
+How to implement JWT filter?
+
+Difference between OAuth2 and JWT?
+
+How to handle exception handling in Spring Security?
+
+What is method-level security? (@PreAuthorize)
+
+Stateless vs Stateful authentication?
+
+How does session management work?
+
+What is AuthenticationManager?
+
+How do you implement refresh token?
+
+How CORS behaves in microservices
+
+How API Gateway removes need for CORS
+
+Why CORS sometimes works in prod but fails in local
+
+What is @SecurityRequirement?
+
+---> @SecurityRequirement is an annotation used in OpenAPI/Swagger documentation to specify the security requirements for an API endpoint.
+     It indicates which security schemes (like JWT, OAuth2) are required to access the endpoint, helping to generate accurate API documentation and client code.
+
+Difference between @SecurityScheme and @SecurityRequirement
+
+| Feature            | `@SecurityScheme`     | `@SecurityRequirement`   |
+| ------------------ | --------------------- | ------------------------ |
+| Purpose            | Defines security type | Applies security to APIs |
+| Where Used         | Configuration class   | Controller / Method      |
+| How Many Times     | Usually once          | Can be multiple          |
+| Role               | Declaration           | Usage                    |
+| Enforces Security? | ❌ No                  | ❌ No                     |
+
