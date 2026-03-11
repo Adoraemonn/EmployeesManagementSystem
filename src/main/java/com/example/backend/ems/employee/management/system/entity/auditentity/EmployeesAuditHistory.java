@@ -9,9 +9,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Date;
 
-/**
- * Represents the audit history of an employee.
- */
 @Getter
 @Setter
 @Entity

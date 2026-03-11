@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './HomePage.css'
 
-// ...existing code...
-
 const HomePage: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('')
   const navigate = useNavigate()
@@ -52,4 +50,3 @@ const HomePage: React.FC = () => {
 }
 
 export default HomePage
-
