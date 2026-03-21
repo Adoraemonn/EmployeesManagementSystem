@@ -10,11 +10,6 @@ const apiClient = axios.create({
 })
 
 export const employeeService = {
-  /**
-   * Get employee details by ID
-   * @param employeeId - The employee ID
-   * @returns Promise<EmployeeDTO>
-   */
   getEmployeeById: async (employeeId: number): Promise<EmployeeDTO> => {
     try {
       const response = await apiClient.get<EmployeeDTO>(
@@ -32,4 +27,3 @@ export const employeeService = {
 }
 
 export default employeeService
-
